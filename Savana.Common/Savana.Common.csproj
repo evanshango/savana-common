@@ -2,11 +2,24 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/evanshango/savana-common.git</RepositoryUrl>
+        <Description>Library for common service functionalities such as generic repository, rabiitmq and mass transit extension settings</Description>
+        <PackageTags>rabbitmq,masstransit,savana</PackageTags>
+        <Product>Savana Common Lib</Product>
+        <Authors>Evans</Authors>
+        <Company>Savana Treasures</Company>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>1.0.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="MassTransit.AspNetCore" Version="7.2.0" />
       <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
     </ItemGroup>

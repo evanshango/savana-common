@@ -1,8 +1,12 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using MassTransit;
 using MassTransit.Definition;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Savana.Common.Errors;
+using Savana.Common.Interfaces;
 using Savana.Common.Settings;
 
 namespace Savana.Common.MassTransit
@@ -25,6 +29,24 @@ namespace Savana.Common.MassTransit
                     );
                 });
             }).AddMassTransitHostedService();
+            return services;
+        }
+
+        public static IServiceCollection ApplicationServices(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<,>));
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    var errors = actionContext.ModelState.Where(e => e.Value.Errors.Count > 0)
+                        .SelectMany(x => x.Value.Errors)
+                        .Select(x => x.ErrorMessage)
+                        .ToArray();
+                    var errorResponse = new ApiValidationErrorResponse {Errors = errors};
+                    return new BadRequestObjectResult(errorResponse);
+                };
+            });
             return services;
         }
     }
