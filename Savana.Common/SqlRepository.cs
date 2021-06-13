@@ -7,15 +7,15 @@ using Savana.Common.Specifications;
 
 namespace Savana.Common
 {
-    public class GenericRepository<T, TContext> : IRepository<T> where T : BaseEntity where TContext : DbContext
+    public class SqlRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly ApplicationContext<TContext> _context;
-
-        public GenericRepository(ApplicationContext<TContext> context)
+        private readonly DbContext _context;
+        
+        public SqlRepository(DbContext context)
         {
             _context = context;
         }
-
+        
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();

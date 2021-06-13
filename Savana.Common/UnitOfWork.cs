@@ -6,12 +6,12 @@ using Savana.Common.Interfaces;
 
 namespace Savana.Common
 {
-    public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
+    public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationContext<TContext> _context;
+        private readonly DbContext _context;
         private Hashtable _repositories;
-
-        public UnitOfWork(ApplicationContext<TContext> context)
+        
+        public UnitOfWork(DbContext context)
         {
             _context = context;
         }
@@ -23,19 +23,18 @@ namespace Savana.Common
             
             if (_repositories.ContainsKey(type)) return (IRepository<TEntity>) _repositories[type];
             
-            var repositoryType = typeof(GenericRepository<,>);
+            var repositoryType = typeof(SqlRepository<>);
             var repoInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(TEntity)), _context);
-            
-            _repositories.Add(type, repoInstance);
+            _repositories.Add(type, repoInstance);  
             
             return (IRepository<TEntity>) _repositories[type];
         }
-
+        
         public async Task<int> Complete()
         {
             return await _context.SaveChangesAsync();
         }
-
+        
         public void Dispose()
         {
             _context.Dispose();
