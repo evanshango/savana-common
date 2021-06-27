@@ -18,5 +18,7 @@
             get => _search;
             set => _search = value.ToLower();
         }
+
+        public bool Active { get; set; } = true;
     }
 }

@@ -17,37 +17,35 @@ namespace Savana.Common
                 .OfType<AuthorizeAttribute>();
 
             var authorizeAttributes = (attributes ?? Array.Empty<AuthorizeAttribute>()).ToList();
-            if (authorizeAttributes.Any())
-            {
-                var attr = authorizeAttributes.ToList()[0];
+            if (!authorizeAttributes.Any()) return;
+            
+            var attr = authorizeAttributes.ToList()[0];
+            // Add response types on secure APIs
+            operation.Responses.Add("403", new OpenApiResponse {Description = "Forbidden"});
                 
-                // Add response types on secure APIs
-                operation.Responses.Add("403", new OpenApiResponse {Description = "Forbidden"});
-                
-                // Add what should be shown inside the security section
-                IList<string> securityInfos = new List<string>();
-                securityInfos.Add($"{nameof(AuthorizeAttribute.Policy)}:{attr.Policy}");
-                securityInfos.Add($"{nameof(AuthorizeAttribute.Roles)}:{attr.Roles}");
-                securityInfos.Add($"{nameof(AuthorizeAttribute.AuthenticationSchemes)}:{attr.AuthenticationSchemes}");
+            // Add what should be shown inside the security section
+            IList<string> securityInfos = new List<string>();
+            securityInfos.Add($"{nameof(AuthorizeAttribute.Policy)}:{attr.Policy}");
+            securityInfos.Add($"{nameof(AuthorizeAttribute.Roles)}:{attr.Roles}");
+            securityInfos.Add($"{nameof(AuthorizeAttribute.AuthenticationSchemes)}:{attr.AuthenticationSchemes}");
 
-                operation.Security = new List<OpenApiSecurityRequirement>()
+            operation.Security = new List<OpenApiSecurityRequirement>()
+            {
+                new()
                 {
-                    new()
                     {
+                        new OpenApiSecurityScheme
                         {
-                            new OpenApiSecurityScheme
+                            Reference = new OpenApiReference
                             {
-                                Reference = new OpenApiReference
-                                {
-                                    Id = "bearer", // Must fit the defined Id of SecurityDefinition in global config
-                                    Type = ReferenceType.SecurityScheme
-                                }
-                            },
-                            securityInfos
-                        }
+                                Id = "bearer", // Must fit the defined Id of SecurityDefinition in global config
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },
+                        securityInfos
                     }
-                };
-            }
+                }
+            };
         }
     }   
 }   

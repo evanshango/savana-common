@@ -6,14 +6,14 @@ namespace Savana.Common.Helpers
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
-        public int TotalItems { get; set; }
+        public int Total { get; set; }
         public IReadOnlyList<T> Data { get; set; }
 
-        public Pagination(int pageIndex, int pageSize, int totalItems, IReadOnlyList<T> data)
+        public Pagination(int pageIndex, int pageSize, int total, IReadOnlyList<T> data)
         {
             Page = pageIndex;
             PageSize = pageSize;
-            TotalItems = totalItems;
+            Total = total;
             Data = data;
         }
     }

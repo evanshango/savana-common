@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Savana.Common.Entities;
 using Savana.Common.Interfaces;
 using Savana.Common.Specifications;
 

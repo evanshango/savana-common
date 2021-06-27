@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Savana.Common.Entities;
 using Savana.Common.Interfaces;
 
 namespace Savana.Common.Specifications

@@ -1,4 +1,4 @@
-﻿namespace Savana.Common
+﻿namespace Savana.Common.Entities
 {
     public class BaseEntity
     {

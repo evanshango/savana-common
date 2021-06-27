@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Savana.Common.Entities;
 using Savana.Common.Interfaces;
 
 namespace Savana.Common
