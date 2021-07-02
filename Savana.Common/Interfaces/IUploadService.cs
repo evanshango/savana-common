@@ -6,6 +6,6 @@ namespace Savana.Common.Interfaces
 {
     public interface IUploadService
     {
-        Task<string> UploadFile(IFormFile file, UploadParams uploadParams);
+        Task<string> UploadFile(IFormFile file, int? width, int? height);
     }
 }
