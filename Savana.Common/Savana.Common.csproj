@@ -4,13 +4,16 @@
         <TargetFramework>net5.0</TargetFramework>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/evanshango/savana-common.git</RepositoryUrl>
-        <Description>Library for common service functionalities such as generic repository, Swagger configuration and File upload service to aws or digital ocean spaces</Description>
+        <Description>
+            Library for common service functionalities such as generic repository, Swagger configuration and File
+            upload service to aws or digital ocean spaces
+        </Description>
         <PackageTags>generic repository, swagger config, file upload,savana</PackageTags>
         <Product>Savana Common Lib</Product>
         <Authors>Evans</Authors>
         <Company>Savana Treasures</Company>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.3.0</PackageVersion>
+        <PackageVersion>1.3.13</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

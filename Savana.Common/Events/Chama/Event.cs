@@ -1,4 +1,4 @@
-﻿namespace Savana.Common.Events
+﻿namespace Savana.Common.Events.Chama
 {
     public record UserCreatedEvent(string Body);
     public record UserUpdatedEvent(string Body);

@@ -94,5 +94,29 @@ namespace Savana.Common
                 return "default";
             }
         }
+
+        public async Task<string> RemoveFile(string fileName)
+        {
+            var clientConfig = new AmazonS3Config {ServiceURL = $"https://{_endpoint}"};
+            var s3Client = new AmazonS3Client(_accessKey, _secretKey, clientConfig);
+            var fileToRemove = fileName.Split("/")[1];
+
+            try
+            {
+                var request = new DeleteObjectRequest
+                {
+                    BucketName = $"{_bucketName}/{_folderName}",
+                    Key = fileToRemove
+                };
+
+                var response = await s3Client.DeleteObjectAsync(request);
+                return response.HttpStatusCode == HttpStatusCode.OK ? "file removed" : "unable to remove file";
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"An error occured while removing file from storage... {e.Message}");
+                return "unable to remove file";
+            }
+        }
     }
 }

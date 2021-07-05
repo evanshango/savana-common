@@ -1,4 +1,4 @@
-﻿namespace Savana.Common.EventBus
+﻿namespace Savana.Common.EventBus.Chama
 {
     public static class EventConstants
     {
