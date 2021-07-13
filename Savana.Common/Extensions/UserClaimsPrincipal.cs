@@ -8,7 +8,7 @@ namespace Savana.Common.Extensions
     {
         public static string RetrieveEmailFromPrincipal(this ClaimsPrincipal user)
         {
-            return user.FindFirstValue(ClaimTypes.Email);
+            return user.FindFirstValue(ClaimTypes.Name);
         }
 
         public static IEnumerable<string> RetrieveRolesFromPrincipal(this ClaimsPrincipal user)

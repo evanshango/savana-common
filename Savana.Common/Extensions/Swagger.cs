@@ -43,7 +43,8 @@ namespace Savana.Common.Extensions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                     ValidIssuer = issuer,
                     ValidateIssuer = true,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidateLifetime = true
                 };
             });
             return services;
