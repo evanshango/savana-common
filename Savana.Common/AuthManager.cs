@@ -22,7 +22,7 @@ namespace Savana.Common
         }
 
         public string GenerateToken(
-            string firstName, string lastName, string email, IEnumerable<string> userRoles, int days)
+            string firstName, string lastName, string email, IEnumerable<string> userRoles, int hours)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>
@@ -37,7 +37,7 @@ namespace Savana.Common
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(days),
+                Expires = DateTime.UtcNow.AddHours(hours),
                 SigningCredentials = credentials,
                 Issuer = _issuer,
             };
