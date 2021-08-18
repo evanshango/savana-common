@@ -10,10 +10,10 @@
         </Description>
         <PackageTags>generic repository, swagger config, file upload,savana</PackageTags>
         <Product>Savana Common Lib</Product>
-        <Authors>Evans</Authors>
+        <Authors>Evans Shango</Authors>
         <Company>Savana Treasures</Company>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.5.3</PackageVersion>
+        <PackageVersion>1.5.14</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

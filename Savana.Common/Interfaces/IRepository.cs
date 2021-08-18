@@ -7,6 +7,7 @@ namespace Savana.Common.Interfaces
     public interface IRepository<T> where T : BaseEntity
     {
         Task<IReadOnlyList<T>> GetAllAsync();
+        Task<IReadOnlyList<T>> GetRandomItemsAsync(ISpecification<T> spec, int count);
         Task<T> GetByIdAsync(int id);
         Task<T> GetEntityWithSpec(ISpecification<T> spec);
         Task<IReadOnlyList<T>> GetAsync(ISpecification<T> spec);

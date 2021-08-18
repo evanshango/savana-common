@@ -30,9 +30,11 @@ namespace Savana.Common.Events.Savana
     public record ImageUpsertedEvent(int ProductId, string Image, string ModifiedBy, DateTime? ModifiedAt);
 
     public record OrderCreatedEvent(int OrderId, string Uuid, string PaymentOption, decimal Total, decimal SubTotal,
-        string Items, DateTime CreatedAt);
+        string Items, string Status, DateTime CreatedAt);
 
     public record OrderUpdatedEvent(int OrderId, string Status, string ModifiedBy, DateTime? ModifiedAt);
 
     public record ClearBasketEvent(string BasketId);
+
+    public record StockUpdateEvent(string Items);
 }

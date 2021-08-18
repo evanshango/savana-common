@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -11,15 +12,22 @@ namespace Savana.Common
     public class SqlRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly DbContext _context;
-        
+
         public SqlRepository(DbContext context)
         {
             _context = context;
         }
-        
+
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> GetRandomItemsAsync(ISpecification<T> spec, int count)
+        {
+            var total = await ApplySpecification(spec).CountAsync();
+            var skip = (int) (new Random().NextDouble() * total);
+            return await ApplySpecification(spec).OrderBy(x => x.Id).Skip(skip).Take(count).ToListAsync();
         }
 
         public async Task<T> GetByIdAsync(int id)

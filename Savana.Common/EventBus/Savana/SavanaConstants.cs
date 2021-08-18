@@ -8,6 +8,7 @@
         public const string OrderQueue = "savana-order-queue";
         public const string BasketQueue = "savana-basket-queue";
         public const string GroupQueue = "savana-group-queue";
+        public const string StockQueue = "savana-stock-queue";
         public const string PaymentQueue = "savana-payment-queue";
         public const string InventoryQueue = "savana-inventory-queue";
     }
