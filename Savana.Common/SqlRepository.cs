@@ -25,9 +25,9 @@ namespace Savana.Common
 
         public async Task<IReadOnlyList<T>> GetRandomItemsAsync(ISpecification<T> spec, int count)
         {
-            var total = await ApplySpecification(spec).CountAsync();
-            var skip = total > count ? (int) (new Random().NextDouble() * total) : 0;
-            return await ApplySpecification(spec).OrderBy(x => x.Id).Skip(skip).Take(count).ToListAsync();
+            return await Task.Run(() => ApplySpecification(spec)
+                .AsEnumerable().OrderBy(_ => new Random().Next()).Take(count).ToList()
+            );
         }
 
         public async Task<T> GetByIdAsync(int id)
