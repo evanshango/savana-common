@@ -17,15 +17,28 @@ namespace Savana.Common.Events.Savana
 
     public record CategoryDeletedEvent(int Id, bool Active, string ModifiedBy, DateTime ModifiedAt);
 
-    public record ProductCreatedEvent(int Id, string Uuid, string Name, string Image, string Category, bool Active,
-        int Stock, int Price, decimal Discount, bool Featured, string Owner, string OwnerPhone, string CreatedBy,
+    public record BrandCreatedEvent(int Id, string Uuid, string Name, string Category, bool Active, string CreatedBy,
         DateTime CreatedAt);
 
+    public record BrandUpdatedEvent(int Id, string Name, string Category, string ModifiedBy, DateTime? ModifiedAt);
+
+    public record BrandDeletedEvent(int Id, bool Active, string ModifiedBy, DateTime? ModifiedAt);
+
+    public record ProductCreatedEvent(int Id, string Uuid, string Name, string Image, string Category, bool Active,
+        int Stock, int Price, bool Featured, string Owner, string OwnerPhone, string CreatedBy, DateTime CreatedAt);
+
     public record ProductUpdatedEvent(int Id, string Name, string Image, string Category, bool Active,
-        int Stock, int Price, decimal Discount, bool Featured, string ModifiedBy, DateTime? ModifiedAt, string Owner,
-        string OwnerPhone);
+        int Stock, int Price, bool Featured, string ModifiedBy, DateTime? ModifiedAt, string Owner, string OwnerPhone);
 
     public record ProductDeletedEvent(int Id, bool Active, string ModifiedBy, DateTime? ModifiedAt);
+
+    public record PromotionCreatedEvent(int Id, string Title, string Uuid, int ProductId, decimal Discount,
+        DateTime? ExpiresAt, string CreatedBy, DateTime CreatedAt);
+
+    public record PromotionUpdatedEvent(int Id, string Title, decimal Discount, DateTime ExpiresAt, string ModifiedBy,
+        DateTime? ModifiedAt);
+
+    public record PromotionDeletedEvent(int Id);
 
     public record ImageUpsertedEvent(int ProductId, string Image, string ModifiedBy, DateTime? ModifiedAt);
 

@@ -4,6 +4,7 @@
     {
         public const string UserQueue = "savana-user-queue";
         public const string CategoryQueue = "savana-category-queue";
+        public const string BrandQueue = "savana-brand-queue";
         public const string ProductQueue = "savana-product-queue";
         public const string OrderQueue = "savana-order-queue";
         public const string BasketQueue = "savana-basket-queue";
