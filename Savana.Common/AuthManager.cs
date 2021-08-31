@@ -55,7 +55,7 @@ namespace Savana.Common
             return $"{email}//{name}";
         }
 
-        public JwtDto ValidateToken(string token, string secretKey, string email, string displayName)
+        public JwtDto ValidateToken(string token, string secretKey, string email, string firstName, string lastName)
         {
             try
             {
@@ -73,15 +73,22 @@ namespace Savana.Common
                 var jwtToken = (JwtSecurityToken) validatedToken;
 
                 if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512))
-                    return new JwtDto {DisplayName = "", Email = "", Token = "", Message = "invalid_token"};
+                    return new JwtDto
+                    {
+                        FirstName = "", LastName = "", Email = "", Token = "", Message = "invalid_token"
+                    };
 
-                return new JwtDto {DisplayName = displayName, Email = email, Token = token};
+                return new JwtDto {FirstName = firstName, LastName = lastName, Email = email, Token = token};
             }
             catch (SecurityTokenException e)
             {
                 return e.Message.Contains("Lifetime validation failed")
-                    ? new JwtDto {DisplayName = displayName, Email = email, Token = "", Message = "generate_token"}
-                    : new JwtDto {DisplayName = "", Email = "", Token = "", Message = "invalid_token"};
+                    ? new JwtDto
+                    {
+                        FirstName = firstName, LastName = lastName, Email = email, Token = "",
+                        Message = "generate_token"
+                    }
+                    : new JwtDto {FirstName = "", LastName = "", Email = "", Token = "", Message = "invalid_token"};
             }
         }
     }

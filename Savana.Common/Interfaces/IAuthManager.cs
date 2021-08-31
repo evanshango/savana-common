@@ -8,6 +8,6 @@ namespace Savana.Common.Interfaces
         string GenerateToken(string firstName, string lastName, string email, IEnumerable<string> userRoles, int hours);
 
         string GetEmailAndNameFromToken(string token);
-        JwtDto ValidateToken(string token, string secretKey, string displayName, string email);
+        JwtDto ValidateToken(string token, string secretKey, string firstName, string lastName, string email);
     }
 }
