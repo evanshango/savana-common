@@ -118,5 +118,34 @@ namespace Savana.Common
                 return "unable to remove file";
             }
         }
+
+        public async Task<string> UploadVideo(IFormFile file)
+        {
+            var extension = file.FileName.Split(".")[file.FileName.Split(".").Length - 1];
+            var fileName = $"{DateTime.Now:yyyyMMddHHmmssffff}.{extension.ToLower()}";
+
+            var clientConfig = new AmazonS3Config {ServiceURL = $"https://{_endpoint}"};
+            var s3Client = new AmazonS3Client(_accessKey, _secretKey, clientConfig);
+
+            try
+            {
+                var request = new PutObjectRequest
+                {
+                    BucketName = $"{_bucketName}/{_folderName}",
+                    Key = fileName,
+                    ContentType = file.ContentType,
+                    CannedACL = S3CannedACL.PublicRead,
+                    InputStream = file.OpenReadStream()
+                };
+
+                var response = await s3Client.PutObjectAsync(request);
+                return response.HttpStatusCode == HttpStatusCode.OK ? $"{_folderName}/{fileName}" : "default";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured while uploading file... {ex.Message}");
+                return "default";
+            }
+        }
     }
 }

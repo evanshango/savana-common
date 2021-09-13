@@ -43,7 +43,7 @@ namespace Savana.Common.Events.Savana
     public record ImageUpsertedEvent(int ProductId, string Image, string ModifiedBy, DateTime? ModifiedAt);
 
     public record OrderCreatedEvent(int OrderId, string Uuid, string PaymentOption, decimal Total, decimal SubTotal,
-        string Items, string Status, DateTime CreatedAt);
+        string Items, string Status, string CreatedBy, DateTime CreatedAt);
 
     public record OrderUpdatedEvent(int OrderId, string Status, string ModifiedBy, DateTime? ModifiedAt);
 
