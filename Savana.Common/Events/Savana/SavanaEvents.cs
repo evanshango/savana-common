@@ -20,7 +20,8 @@ namespace Savana.Common.Events.Savana
     public record BrandCreatedEvent(int Id, string Uuid, string Name, string Category, bool Active, string CreatedBy,
         DateTime CreatedAt);
 
-    public record BrandUpdatedEvent(int Id, string Name, string Category, string ModifiedBy, DateTime? ModifiedAt);
+    public record BrandUpdatedEvent(int Id, string Name, string Category, bool Active, string ModifiedBy,
+        DateTime? ModifiedAt);
 
     public record BrandDeletedEvent(int Id, bool Active, string ModifiedBy, DateTime? ModifiedAt);
 
