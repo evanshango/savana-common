@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Savana.Common.Entities;
 using Savana.Common.Interfaces;
 using Savana.Common.Specifications;
 
 namespace Savana.Common
 {
-    public class SqlRepository<T> : IRepository<T> where T : BaseEntity
+    public class SqlRepository<T> : IRepository<T> where T : class
     {
         private readonly DbContext _context;
 

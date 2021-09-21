@@ -1,11 +1,10 @@
 ﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Savana.Common.Entities;
 using Savana.Common.Interfaces;
 
 namespace Savana.Common.Specifications
 {
-    public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
+    public class SpecificationEvaluator<TEntity> where TEntity : class
     {
         public static IQueryable<TEntity> GetQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> spec)
         {
@@ -25,6 +24,11 @@ namespace Savana.Common.Specifications
             {
                 query = query.OrderByDescending(spec.OrderByDesc);
             }
+            
+            if (spec.GroupBy != null)
+            {
+                query = query.GroupBy(spec.GroupBy).SelectMany(x => x);
+            }
 
             if (spec.IsPagingEnabled)
             {
@@ -33,6 +37,9 @@ namespace Savana.Common.Specifications
 
             query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
             
+            // Include any string-based include statements
+            query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
+
             return query;
         }
     }

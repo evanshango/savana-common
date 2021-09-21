@@ -4,7 +4,7 @@ using Savana.Common.Entities;
 
 namespace Savana.Common.Interfaces
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : class
     {
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetRandomItemsAsync(ISpecification<T> spec, int count);

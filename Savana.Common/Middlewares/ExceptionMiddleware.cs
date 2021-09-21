@@ -26,6 +26,7 @@ namespace Savana.Common.Middlewares
         {
             try
             {
+                context.Response.ContentType = "application/json";
                 await _next(context);
             }
             catch (Exception ex)

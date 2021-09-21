@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Savana.Common.Dtos;
+using Savana.Common.Entities;
 using Savana.Common.Interfaces;
 
 namespace Savana.Common
@@ -21,9 +21,13 @@ namespace Savana.Common
             _issuer = issuer;
         }
 
-        public string GenerateToken(
-            string firstName, string lastName, string email, IEnumerable<string> userRoles, int hours)
+        public string GenerateToken(string firstName, string lastName, string email, IEnumerable<string> userRoles,
+            int duration, string appId)
         {
+            var expiresAt = appId.Equals(ApplicationIdConstants.Admin)
+                ? DateTime.UtcNow.AddHours(duration)
+                : DateTime.UtcNow.AddDays(duration);
+
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>
             {
@@ -37,7 +41,7 @@ namespace Savana.Common
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddHours(hours),
+                Expires = expiresAt,
                 SigningCredentials = credentials,
                 Issuer = _issuer,
             };
@@ -49,13 +53,11 @@ namespace Savana.Common
         public string GetEmailAndNameFromToken(string token)
         {
             var payload = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var email = payload.Claims.Where(c => c.Type == "unique_name").Select(c => c.Value).FirstOrDefault();
-            var name = payload.Claims.Where(c => c.Type == "given_name").Select(c => c.Value).FirstOrDefault();
 
-            return $"{email}//{name}";
+            return payload.Claims.Where(c => c.Type == TokenConstants.UniqueName).Select(c => c.Value).FirstOrDefault();
         }
 
-        public JwtDto ValidateToken(string token, string secretKey, string email, string firstName, string lastName)
+        public string ValidateToken(string token, string secretKey, string email, string firstName, string lastName)
         {
             try
             {
@@ -73,22 +75,15 @@ namespace Savana.Common
                 var jwtToken = (JwtSecurityToken) validatedToken;
 
                 if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512))
-                    return new JwtDto
-                    {
-                        FirstName = "", LastName = "", Email = "", Token = "", Message = "invalid_token"
-                    };
+                    return TokenConstants.InvalidToken;
 
-                return new JwtDto {FirstName = firstName, LastName = lastName, Email = email, Token = token};
+                return token;
             }
             catch (SecurityTokenException e)
             {
                 return e.Message.Contains("Lifetime validation failed")
-                    ? new JwtDto
-                    {
-                        FirstName = firstName, LastName = lastName, Email = email, Token = "",
-                        Message = "generate_token"
-                    }
-                    : new JwtDto {FirstName = "", LastName = "", Email = "", Token = "", Message = "invalid_token"};
+                    ? TokenConstants.GenerateToken
+                    : TokenConstants.InvalidToken;
             }
         }
     }

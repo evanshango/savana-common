@@ -5,9 +5,10 @@ namespace Savana.Common.Interfaces
 {
     public interface IAuthManager
     {
-        string GenerateToken(string firstName, string lastName, string email, IEnumerable<string> userRoles, int hours);
+        string GenerateToken(string firstName, string lastName, string email, IEnumerable<string> userRoles,
+            int duration, string applicationId);
 
         string GetEmailAndNameFromToken(string token);
-        JwtDto ValidateToken(string token, string secretKey, string firstName, string lastName, string email);
+        string ValidateToken(string token, string secretKey, string firstName, string lastName, string email);
     }
 }
