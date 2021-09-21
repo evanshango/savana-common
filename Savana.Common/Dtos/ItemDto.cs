@@ -1,11 +1,9 @@
-﻿using Savana.Common.Entities;
-
-namespace Savana.Common.Dtos
+﻿namespace Savana.Common.Dtos
 {
-    public class ItemResponse<T> where T: BaseEntity
+    public class ItemResponse<T> where T : class
     {
         public string Message { get; set; }
         public T Item { get; set; }
         public int StatusCode { get; set; }
     }
-}   
+}

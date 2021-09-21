@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using Savana.Common.Entities;
 
 namespace Savana.Common.Dtos
 {
-    public class ItemsDto<T> where T: BaseEntity
-    {   
+    public class ItemsDto<T> where T : class
+    {
         public int Total { get; init; }
         public IReadOnlyList<T> Items { get; init; }
         public int Page { get; init; }
