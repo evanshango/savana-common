@@ -15,5 +15,10 @@ namespace Savana.Common.Extensions
         {
             return user.FindAll(ClaimTypes.Role).Select(c => c.Value);
         }
+
+        public static string RetrieveAppIdFromPrincipal(this ClaimsPrincipal user)
+        {
+            return user.FindFirstValue(ClaimTypes.Actor);
+        }
     }
 }

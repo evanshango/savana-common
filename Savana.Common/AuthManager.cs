@@ -32,7 +32,8 @@ namespace Savana.Common
             var claims = new List<Claim>
             {
                 new(ClaimTypes.Name, email),
-                new(ClaimTypes.GivenName, $"{firstName} {lastName}")
+                new(ClaimTypes.GivenName, $"{firstName} {lastName}"),
+                new (ClaimTypes.Actor, appId)
             };
             claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
