@@ -19,6 +19,14 @@ namespace Savana.Common
         private readonly string _bucketName;
         private readonly string _folderName;
 
+        /// <summary>
+        /// Creates an instance of an upload service
+        /// </summary>
+        /// <param name="endpoint"></param>
+        /// <param name="accessKey"></param>
+        /// <param name="secretKey"></param>
+        /// <param name="bucketName"></param>
+        /// <param name="folderName"></param>
         public UploadService(string endpoint, string accessKey, string secretKey, string bucketName, string folderName)
         {
             _endpoint = endpoint;
@@ -28,6 +36,13 @@ namespace Savana.Common
             _folderName = folderName;
         }
 
+        /// <summary>
+        /// Resizes the specified image with the given dimensions
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="maxWidth"></param>
+        /// <param name="maxHeight"></param>
+        /// <returns></returns>
         private static string ResizedImage(IImageInfo image, int? maxWidth, int? maxHeight)
         {
             string dimensionString;
@@ -58,6 +73,13 @@ namespace Savana.Common
             return dimensionString;
         }
 
+        /// <summary>
+        /// Returns a path to an uploaded file with the given dimensions
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
         public async Task<string> UploadFile(IFormFile file, int? width, int? height)
         {
             var extension = file.FileName.Split(".")[file.FileName.Split(".").Length - 1];
@@ -95,6 +117,11 @@ namespace Savana.Common
             }
         }
 
+        /// <summary>
+        /// Removes the given file name from the storage bucket
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns><value></value></returns>
         public async Task<string> RemoveFile(string fileName)
         {
             var clientConfig = new AmazonS3Config {ServiceURL = $"https://{_endpoint}"};

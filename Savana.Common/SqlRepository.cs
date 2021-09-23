@@ -17,11 +17,21 @@ namespace Savana.Common
             _context = context;
         }
 
+        /// <summary>
+        /// Returns a list of items of the type passed
+        /// </summary>
+        /// <returns><list type="T"></list></returns>
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
-
+        
+        /// <summary>
+        /// Returns random items based on the count and specification given
+        /// </summary>
+        /// <param name="spec"></param>
+        /// <param name="count"></param>
+        /// <returns><list type="T"></list></returns>
         public async Task<IReadOnlyList<T>> GetRandomItemsAsync(ISpecification<T> spec, int count)
         {
             return await Task.Run(() => ApplySpecification(spec)

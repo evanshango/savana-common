@@ -7,9 +7,14 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Savana.Common.Entities;
 using Savana.Common.Interfaces;
+using static Savana.Common.Entities.ApplicationIdConstants;
+using static Savana.Common.Entities.TokenConstants;
 
 namespace Savana.Common
 {
+    /// <summary>
+    /// Contains methods for token generation, user email retrieval from token passed and token validation
+    /// </summary>
     public class AuthManager : IAuthManager
     {
         private readonly SymmetricSecurityKey _key;
@@ -20,21 +25,33 @@ namespace Savana.Common
             _key = key;
             _issuer = issuer;
         }
+        
+        /// <summary>
+        /// Generates user token based on params passed
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="email"></param>
+        /// <param name="userRoles"></param>
+        /// <param name="span"></param>
+        /// <param name="appId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
 
         public string GenerateToken(string firstName, string lastName, string email, IEnumerable<string> userRoles,
-            int duration, string appId)
+            int span, string appId, int? groupId)
         {
-            var expiresAt = appId.Equals(ApplicationIdConstants.Admin)
-                ? DateTime.UtcNow.AddHours(duration)
-                : DateTime.UtcNow.AddDays(duration);
+            var expiresAt = appId.Equals(Admin) ? DateTime.UtcNow.AddHours(span) : DateTime.UtcNow.AddDays(span);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = new List<Claim>
             {
                 new(ClaimTypes.Name, email),
                 new(ClaimTypes.GivenName, $"{firstName} {lastName}"),
-                new (ClaimTypes.Actor, appId)
+                new(ClaimTypes.Actor, appId),
             };
+            if (groupId != null) claims.Add(new Claim(ClaimTypes.GroupSid, groupId.ToString()));
+
             claims.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512);
@@ -51,13 +68,27 @@ namespace Savana.Common
             return tokenHandler.WriteToken(token);
         }
 
+        /// <summary>
+        /// Retrieve email address from the token passed token is valid
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public string GetEmailAndNameFromToken(string token)
         {
             var payload = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
-            return payload.Claims.Where(c => c.Type == TokenConstants.UniqueName).Select(c => c.Value).FirstOrDefault();
+            return payload.Claims.Where(c => c.Type == UniqueName).Select(c => c.Value).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Validate the token passed by the user
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="secretKey"></param>
+        /// <param name="email"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <returns></returns>
         public string ValidateToken(string token, string secretKey, string email, string firstName, string lastName)
         {
             try
@@ -76,15 +107,13 @@ namespace Savana.Common
                 var jwtToken = (JwtSecurityToken) validatedToken;
 
                 if (jwtToken == null || !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512))
-                    return TokenConstants.InvalidToken;
+                    return InvalidToken;
 
                 return token;
             }
             catch (SecurityTokenException e)
             {
-                return e.Message.Contains("Lifetime validation failed")
-                    ? TokenConstants.GenerateToken
-                    : TokenConstants.InvalidToken;
+                return e.Message.Contains(Validation) ? TokenConstants.GenerateToken : InvalidToken;
             }
         }
     }
