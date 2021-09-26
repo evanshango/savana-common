@@ -109,11 +109,9 @@ namespace Savana.Common.Events.Savana
     /// <param name="Id"></param>
     /// <param name="Uuid"></param>
     /// <param name="Name"></param>
-    /// <param name="Category"></param>
-    /// <param name="Active"></param>
     /// <param name="CreatedBy"></param>
     /// <param name="CreatedAt"></param>
-    public record BrandCreatedEvent(int Id, string Uuid, string Name, string Category, bool Active, string CreatedBy,
+    public record BrandCreatedEvent(int Id, string Uuid, string Name, string CreatedBy,
         DateTime CreatedAt);
 
     /// <summary>
@@ -121,11 +119,10 @@ namespace Savana.Common.Events.Savana
     /// </summary>
     /// <param name="Id"></param>
     /// <param name="Name"></param>
-    /// <param name="Category"></param>
     /// <param name="Active"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
-    public record BrandUpdatedEvent(int Id, string Name, string Category, bool Active, string ModifiedBy,
+    public record BrandUpdatedEvent(int Id, string Name, bool Active, string ModifiedBy,
         DateTime? ModifiedAt);
 
     /// <summary>
@@ -143,8 +140,8 @@ namespace Savana.Common.Events.Savana
     /// <param name="Uuid"></param>
     /// <param name="Name"></param>
     /// <param name="Image"></param>
+    /// <param name="Category"></param>
     /// <param name="Brand"></param>
-    /// <param name="Active"></param>
     /// <param name="Stock"></param>
     /// <param name="Price"></param>
     /// <param name="Featured"></param>
@@ -156,7 +153,7 @@ namespace Savana.Common.Events.Savana
     /// <param name="GroupAccount"></param>
     /// <param name="CreatedBy"></param>
     /// <param name="CreatedAt"></param>
-    public record ProductCreatedEvent(int Id, string Uuid, string Name, string Image, string Brand, bool Active,
+    public record ProductCreatedEvent(int Id, string Uuid, string Name, string Image, string Category, string Brand,
         int Stock, int Price, bool Featured, string Owner, string OwnerPhone, string GroupName, string GroupPhone,
         string GroupPayBill, string GroupAccount, string CreatedBy, DateTime CreatedAt);
 
@@ -166,6 +163,7 @@ namespace Savana.Common.Events.Savana
     /// <param name="Id"></param>
     /// <param name="Name"></param>
     /// <param name="Image"></param>
+    /// <param name="Category"></param>
     /// <param name="Brand"></param>
     /// <param name="Active"></param>
     /// <param name="Stock"></param>
@@ -179,8 +177,8 @@ namespace Savana.Common.Events.Savana
     /// <param name="GroupAccount"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
-    public record ProductUpdatedEvent(int Id, string Name, string Image, string Brand, bool Active, int Stock,
-        int Price, bool Featured, string Owner, string OwnerPhone, string GroupName, string GroupPhone,
+    public record ProductUpdatedEvent(int Id, string Name, string Image, string Category, string Brand, bool Active,
+        int Stock, int Price, bool Featured, string Owner, string OwnerPhone, string GroupName, string GroupPhone,
         string GroupPayBill, string GroupAccount, string ModifiedBy, DateTime? ModifiedAt);
 
     /// <summary>
