@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Savana.Common.Events.Savana
 {
@@ -10,11 +11,12 @@ namespace Savana.Common.Events.Savana
     /// <param name="Email"></param>
     /// <param name="Active"></param>
     /// <param name="Phone"></param>
-    /// <param name="GroupId"></param>
+    /// <param name="GroupIds"></param>
     /// <param name="CreatedBy"></param>
     /// <param name="AccountType"></param>
     /// <param name="CreatedAt"></param>
-    public record UserCreatedEvent(string Id, string Name, string Email, bool Active, string Phone, int? GroupId,
+    public record UserCreatedEvent(string Id, string Name, string Email, bool Active, string Phone,
+        IEnumerable<int?> GroupIds,
         string CreatedBy, string AccountType, DateTime CreatedAt);
 
     /// <summary>
@@ -24,12 +26,12 @@ namespace Savana.Common.Events.Savana
     /// <param name="Name"></param>
     /// <param name="Active"></param>
     /// <param name="Phone"></param>
-    /// <param name="GroupId"></param>
+    /// <param name="GroupIds"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="AccountType"></param>
     /// <param name="ModifiedAt"></param>
-    public record UserUpdatedEvent(string Id, string Name, bool Active, string Phone, int? GroupId, string ModifiedBy,
-        string AccountType, DateTime ModifiedAt);
+    public record UserUpdatedEvent(string Id, string Name, bool Active, string Phone, IEnumerable<int?> GroupIds,
+        string ModifiedBy, string AccountType, DateTime ModifiedAt);
 
     /// <summary>
     /// Emits a User deleted event to an event bus

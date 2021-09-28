@@ -13,7 +13,7 @@
         <Authors>Evans Shango</Authors>
         <Company>Savana Treasures</Company>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.6.6.8</PackageVersion>
+        <PackageVersion>1.6.7.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
