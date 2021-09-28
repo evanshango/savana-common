@@ -10,11 +10,12 @@ namespace Savana.Common.Events.Savana
     /// <param name="Email"></param>
     /// <param name="Active"></param>
     /// <param name="Phone"></param>
+    /// <param name="GroupId"></param>
     /// <param name="CreatedBy"></param>
     /// <param name="AccountType"></param>
     /// <param name="CreatedAt"></param>
-    public record UserCreatedEvent(string Id, string Name, string Email, bool Active, string Phone, string CreatedBy,
-        string AccountType, DateTime CreatedAt);
+    public record UserCreatedEvent(string Id, string Name, string Email, bool Active, string Phone, int? GroupId,
+        string CreatedBy, string AccountType, DateTime CreatedAt);
 
     /// <summary>
     /// Emits a User updated event to an event bus
@@ -23,10 +24,11 @@ namespace Savana.Common.Events.Savana
     /// <param name="Name"></param>
     /// <param name="Active"></param>
     /// <param name="Phone"></param>
+    /// <param name="GroupId"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="AccountType"></param>
     /// <param name="ModifiedAt"></param>
-    public record UserUpdatedEvent(string Id, string Name, bool Active, string Phone, string ModifiedBy,
+    public record UserUpdatedEvent(string Id, string Name, bool Active, string Phone, int? GroupId, string ModifiedBy,
         string AccountType, DateTime ModifiedAt);
 
     /// <summary>
