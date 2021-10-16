@@ -60,14 +60,15 @@ namespace Savana.Common.Events.Savana
     /// </summary>
     /// <param name="Id"></param>
     /// <param name="Name"></param>
+    /// <param name="UserId"></param>
     /// <param name="Phone"></param>
     /// <param name="PayBillNo"></param>
     /// <param name="AccountNo"></param>
     /// <param name="Active"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
-    public record GroupUpdatedEvent(int Id, string Name, string Phone, string PayBillNo, string AccountNo, bool Active,
-        string ModifiedBy, DateTime? ModifiedAt);
+    public record GroupUpdatedEvent(int Id, string Name, string UserId, string Phone, string PayBillNo,
+        string AccountNo, bool Active, string ModifiedBy, DateTime? ModifiedAt);
 
     /// <summary>
     /// Emits a Group deleted event to an event bus
@@ -305,4 +306,13 @@ namespace Savana.Common.Events.Savana
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
     public record OccasionDeletedEvent(int Id, string ModifiedBy, DateTime? ModifiedAt);
+    
+    /// <summary>
+    /// Emits a Payment made event to an event bus
+    /// </summary>
+    /// <param name="OrderId"></param>
+    /// <param name="PaymentStatus"></param>
+    /// <param name="ModifiedBy"></param>
+    /// <param name="ModifiedAt"></param>
+    public record PaymentMade(int OrderId, string PaymentStatus, string ModifiedBy, DateTime? ModifiedAt);
 }
