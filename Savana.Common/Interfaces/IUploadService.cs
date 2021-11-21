@@ -7,7 +7,5 @@ namespace Savana.Common.Interfaces
     {
         Task<string> UploadFile(IFormFile file, int? width, int? height);
         Task<string> RemoveFile(string fileName);
-
-        Task<string> UploadVideo(IFormFile file);
     }
 }
