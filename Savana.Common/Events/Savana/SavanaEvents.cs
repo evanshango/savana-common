@@ -247,17 +247,19 @@ namespace Savana.Common.Events.Savana
     /// <param name="Status"></param>
     /// <param name="CreatedBy"></param>
     /// <param name="CreatedAt"></param>
-    public record OrderCreatedEvent(int OrderId, string Uuid, string PaymentOption, decimal Total, decimal SubTotal,
-        string Items, string Status, string CreatedBy, DateTime CreatedAt);
+    public record OrderCreatedEvent(int OrderId, string Uuid, string PaymentOption, string PaymentStatus, decimal Total,
+        decimal SubTotal, string Items, string Status, string CreatedBy, DateTime CreatedAt);
 
     /// <summary>
     /// Emits an Order updated event to an event bus
     /// </summary>
     /// <param name="OrderId"></param>
-    /// <param name="Status"></param>
+    /// <param name="OrderStatus"></param>
+    /// <param name="PaymentStatus"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
-    public record OrderUpdatedEvent(int OrderId, string Status, string ModifiedBy, DateTime? ModifiedAt);
+    public record OrderUpdatedEvent(int OrderId, string OrderStatus, string PaymentStatus, string ModifiedBy,
+        DateTime? ModifiedAt);
 
     /// <summary>
     /// Emits a clear basket event to an event bus
@@ -306,13 +308,15 @@ namespace Savana.Common.Events.Savana
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
     public record OccasionDeletedEvent(int Id, string ModifiedBy, DateTime? ModifiedAt);
-    
+
     /// <summary>
     /// Emits a Payment made event to an event bus
     /// </summary>
     /// <param name="OrderId"></param>
     /// <param name="PaymentStatus"></param>
+    /// <param name="ResponseMessage"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
-    public record PaymentMade(int OrderId, string PaymentStatus, string ModifiedBy, DateTime? ModifiedAt);
+    public record PaymentMade(int OrderId, string PaymentStatus, string ResponseMessage, string ModifiedBy,
+        DateTime? ModifiedAt);
 }
