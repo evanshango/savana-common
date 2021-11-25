@@ -256,10 +256,11 @@ namespace Savana.Common.Events.Savana
     /// <param name="OrderId"></param>
     /// <param name="OrderStatus"></param>
     /// <param name="PaymentStatus"></param>
+    /// <param name="PaymentOption"></param>
     /// <param name="ModifiedBy"></param>
     /// <param name="ModifiedAt"></param>
-    public record OrderUpdatedEvent(int OrderId, string OrderStatus, string PaymentStatus, string ModifiedBy,
-        DateTime? ModifiedAt);
+    public record OrderUpdatedEvent(int OrderId, string OrderStatus, string PaymentStatus, string PaymentOption,
+        string ModifiedBy, DateTime? ModifiedAt);
 
     /// <summary>
     /// Emits a clear basket event to an event bus

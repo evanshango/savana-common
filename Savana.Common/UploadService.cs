@@ -115,12 +115,11 @@ namespace Savana.Common
 
         private static async Task<Stream> ImageResizedResult(IFormFile file, int? width, int? height)
         {
+            var stream = new MemoryStream();
             using var image = await Image.LoadAsync(file.OpenReadStream());
             var newSize = ResizedImage(image, width, height);
             var sizeArray = newSize.Split(",");
             image.Mutate(x => x.Resize(Convert.ToInt32(sizeArray[1]), Convert.ToInt32(sizeArray[0])));
-
-            await using var stream = new MemoryStream();
             await image.SaveAsPngAsync(stream);
             return stream;
         }
